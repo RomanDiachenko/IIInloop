@@ -31,10 +31,10 @@ namespace Inloop
 
         //Press in first few newsletter, after pressing close opened tab
         [Test]
-        public void a_NewsletterPicker()
+        public void A_NewsletterPicker()
         {
             _mainPage = new MainPage(_driver);
-            _mainPage = _mainPage.ClickElement();
+            _mainPage = _mainPage.CloseCoockie();
             _mainPage = _mainPage.NewsLetterPick();
 
         }
@@ -54,7 +54,7 @@ namespace Inloop
         
         [Test]
         // Tap in tematic tabs
-        public void b_TapIn1Tab()
+        public void B_TapIn1Tab()
         {
             _mainPage = new MainPage(_driver);
 
@@ -68,11 +68,14 @@ namespace Inloop
             _mainPage = _mainPage.TapInTab8();
         }
         [Test]
-        public void c_PopularTab1()
+        public void C_PopularTab1()
         {
             _mainPage = new MainPage(_driver);
 
+            //_mainPage = _mainPage.CloseCoockie();
             _mainPage = _mainPage.PopularTab();
+            //_mainPage = _mainPage.RecentNews();
+            _mainPage = _mainPage.Personalization_conteiner();
         }
 
         [OneTimeTearDown]

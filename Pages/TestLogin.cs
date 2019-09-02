@@ -1,20 +1,22 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace InloopLogin.Pages
 {
-    class login
+    class Login
     {
-        private IWebDriver _driver;
+        private readonly IWebDriver _driver;
         private readonly string _base_url = TestContext.Parameters.Get("BaseUrl");
-        public login(IWebDriver driver)
+        public Login(IWebDriver driver)
         {
             this._driver = driver;
         }
 
-        public login a_LoginUser()
+        public Login A_LoginUser()
             //Validation of correct login user
         {
             _driver.FindElement(By.XPath("//a[contains(text(),'Login')]")).Click();
@@ -28,7 +30,7 @@ namespace InloopLogin.Pages
             Assert.IsTrue(_driver.PageSource.Contains(_base_url));
             return this;
         }
-        public login b_DropDownAcc_personalize()
+        public Login B_DropDownAcc_personalize()
             //Check drop bar and personalize tab
         {
             _driver.FindElement(By.XPath("//button[@class='menu menu-desktop']")).Click();
@@ -37,7 +39,7 @@ namespace InloopLogin.Pages
             Assert.IsTrue(_driver.PageSource.Contains("trackeruser/personalization"));
             return this;
         }
-        public login c_Foloving()
+        public Login C_Foloving()
             //Check tematic tabs
         {
             _driver.FindElement(By.XPath("//li[contains(text(),'Following')]")).Click();
@@ -47,7 +49,7 @@ namespace InloopLogin.Pages
             Thread.Sleep(5000);
             return this;
         }
-        public login d_Sorting()
+        public Login D_Sorting()
             //Check sorting tab
         {
             _driver.FindElement(By.XPath("//li[contains(text(),'categories')]")).Click();
@@ -57,7 +59,7 @@ namespace InloopLogin.Pages
             _driver.FindElement(By.XPath("//label[contains(text(),'list view')]")).Click();
             return this;
         }
-        public login e_DropBar()
+        public Login E_DropBar()
             //Autorized drop bar
         {
             _driver.FindElement(By.XPath("//button[@class='menu menu-desktop']")).Click();
@@ -66,14 +68,31 @@ namespace InloopLogin.Pages
             Assert.IsTrue(_driver.PageSource.Contains("trackeruser/profiledetails"));
             return this;
         }
-        public login my_newsfeed()
+        public Login My_newsfeed()
         //newsfeed check
         {
-            _driver.FindElement(By.XPath("//li[@class='dropdown menu-color1 active']//a[@class='ng-scope'][contains(text(),'My newsfeed')]")).Click();
-            Assert.IsTrue(_driver.PageSource.Contains("my?type=tracked"));
+            List<IWebElement> top = _driver.FindElement(By.XPath("//div[@class='navbar-collapse collapse']")).FindElements(By.TagName("a")).ToList();
+            for (int i = 0; i < top.Count; i++)
+            {
+                Actions actions = new Actions(_driver);
+                actions.KeyDown(Keys.LeftControl).Click(top[i]).Build().Perform();
+                Thread.Sleep(5000);
+                var browserTabs = _driver.WindowHandles;
+                _driver.SwitchTo().Window(browserTabs[1]);
+                _driver.Close();
+                _driver.SwitchTo().Window(browserTabs[0]);
+            }
+            _driver.SwitchTo().Window(_driver.WindowHandles[0]);
+
             return this;
         }
-
+        public Login Mainpage()
+        //go to main page
+        {
+            _driver.Navigate().GoToUrl(_base_url);
+            Assert.IsTrue(_driver.PageSource.Contains(_base_url));
+            return this;
+        }
                 
         [OneTimeTearDown]
         public void TearDown()

@@ -10,7 +10,7 @@ namespace Inloop.Pages
     class MainPage
     {
         //Import keys from .runsettings file
-        private IWebDriver _driver;
+        private readonly IWebDriver _driver;
         private readonly string _base_url = TestContext.Parameters.Get("BaseUrl");
         private readonly string _tag_list1 = TestContext.Parameters.Get("tag_list1");
         private readonly string _tag_list2 = TestContext.Parameters.Get("tag_list2");
@@ -26,9 +26,10 @@ namespace Inloop.Pages
             this._driver = driver;
         }
 
-        public MainPage ClickElement()
+        public MainPage CloseCoockie()
             //close coockie pop-up
         {
+            Thread.Sleep(5000);
             _driver.FindElement(By.XPath("//a[@class='cc-btn cc-dismiss']")).Click();
             return this;
         }
@@ -150,17 +151,50 @@ namespace Inloop.Pages
         {
             _driver.FindElement(By.TagName("body")).SendKeys(Keys.End);
             Thread.Sleep(2000);
+            var element = _driver.FindElement(By.XPath("//span[contains(text(),'Industry Tweets')]"));
+            Actions action = new Actions(_driver);
+            action.MoveToElement(element);
+            action.Perform();
             List<IWebElement> pop = _driver.FindElement(By.XPath("//div[@class='widget reviewwidget ng-scope']")).FindElements(By.TagName("article")).ToList();
             for (int j = 0; j < pop.Count; j++)
             {
                 Actions actions = new Actions(_driver);
-                actions.KeyDown(Keys.LeftControl)
-                    .Click(pop[j]).Build().Perform();
+                actions.KeyDown(Keys.LeftControl).Click(pop[j]).Build().Perform();
             }
             _driver.SwitchTo().Window(_driver.WindowHandles[0]);
-            _driver.Navigate().Refresh();
+            return this;
+        }
+        //public MainPage RecentNews()
+        ////checking recentNews NOT WORKED
+        //{
+        //    var element = _driver.FindElement(By.XPath("//section[1]//article[1]"));
+        //    Actions actions = new Actions(_driver);
+        //    actions.MoveToElement(element);
+        //    actions.Perform();
+        //    List<IWebElement> rec = _driver.FindElement(By.XPath("//div[@class='col-md-8 ng-scope']//article-plates[3]")).FindElements(By.TagName("a")).ToList();
+        //    for (int i = 0; i < rec.Count; i++)
+        //    {
+        //        rec[i].Click();
+        //        //Assert.IsFalse(_driver.PageSource.Contains(_base_url));
+        //        _driver.Navigate().Back();
+        //        Thread.Sleep(5000);
+        //    }
+        //    return this;
+    public MainPage Personalization_conteiner()
+        //Tap in personalization tabs
+        {
+            List<IWebElement> pers = _driver.FindElement(By.XPath("//div[@class='personalization-container']")).FindElements(By.TagName("p")).ToList();
+            for (int i = 0; i < pers.Count; i++)
+            {
+                _driver.SwitchTo().Window(_driver.WindowHandles[0]);
+                pers[i].Click();
+                Thread.Sleep(6000);
+                //_driver.Navigate().Back();
+                //Thread.Sleep(2000);
+            }
             return this;
         }
 
+    
     }
 }
