@@ -17,9 +17,17 @@ namespace Inloop
         //[TestFixture(typeof(EdgeDriver))]
         public class Tests<TWebDriver> where TWebDriver : IWebDriver, new()
         {
+            private readonly string _base_url = TestContext.Parameters.Get("BaseUrl");
+            private readonly string _tag_list1 = TestContext.Parameters.Get("tag_list1");
+            private readonly string _tag_list2 = TestContext.Parameters.Get("tag_list2");
+            private readonly string _tag_list3 = TestContext.Parameters.Get("tag_list3");
+            private readonly string _tag_list4 = TestContext.Parameters.Get("tag_list4");
+            private readonly string _tag_list5 = TestContext.Parameters.Get("tag_list5");
+            private readonly string _tag_list6 = TestContext.Parameters.Get("tag_list6");
+            private readonly string _tag_list7 = TestContext.Parameters.Get("tag_list7");
+            private readonly string _tag_list8 = TestContext.Parameters.Get("tag_list8");
             public IWebDriver _driver;
             private MainPage _mainPage;
-            private readonly string _base_url = TestContext.Parameters.Get("BaseUrl");
             public TestContext TestContext { get; set; }
             public static readonly TestParameters testParams;
 
@@ -46,13 +54,15 @@ namespace Inloop
             }
 
             //Press in first few newsletter, after pressing close opened tab
+
             [Test]
             public void A_NewsletterPicker()
             {
+                bool chrome = (typeof(TWebDriver).Name == "ChromeDriver");
                 _mainPage = new MainPage(_driver);
                 _mainPage = _mainPage.CloseCoockie();
-                _mainPage = _mainPage.NewsLetterPick();
-
+                _mainPage = _mainPage.NewsLetterPickChrome(chrome);
+                
             }
 
             //Demo form crashing captcha
@@ -74,14 +84,14 @@ namespace Inloop
             {
                 _mainPage = new MainPage(_driver);
 
-                _mainPage = _mainPage.TapInTab1();
-                _mainPage = _mainPage.TapInTab2();
-                _mainPage = _mainPage.TapInTab3();
-                _mainPage = _mainPage.TapInTab4();
-                _mainPage = _mainPage.TapInTab5();
-                _mainPage = _mainPage.TapInTab6();
-                _mainPage = _mainPage.TapInTab7();
-                _mainPage = _mainPage.TapInTab8();
+                _mainPage = _mainPage.TapInTab1(_tag_list1);
+                _mainPage = _mainPage.TapInTab1(_tag_list2);
+                _mainPage = _mainPage.TapInTab1(_tag_list3);
+                _mainPage = _mainPage.TapInTab1(_tag_list4);
+                _mainPage = _mainPage.TapInTab1(_tag_list5);
+                _mainPage = _mainPage.TapInTab1(_tag_list6);
+                _mainPage = _mainPage.TapInTab1(_tag_list7);
+                _mainPage = _mainPage.TapInTab1(_tag_list8);
             }
             [Test]
             public void C_PopularTab1()
@@ -91,7 +101,7 @@ namespace Inloop
                 //_mainPage = _mainPage.CloseCoockie();
                 _mainPage = _mainPage.PopularTab();
                 //_mainPage = _mainPage.RecentNews();
-                _mainPage = _mainPage.Personalization_conteiner();
+                ////_mainPage = _mainPage.Personalization_conteiner();
             }
 
             [OneTimeTearDown]

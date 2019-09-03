@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,20 +13,14 @@ namespace Inloop.Pages
         //Import keys from .runsettings file
         private readonly IWebDriver _driver;
         private readonly string _base_url = TestContext.Parameters.Get("BaseUrl");
-        private readonly string _tag_list1 = TestContext.Parameters.Get("tag_list1");
-        private readonly string _tag_list2 = TestContext.Parameters.Get("tag_list2");
-        private readonly string _tag_list3 = TestContext.Parameters.Get("tag_list3");
-        private readonly string _tag_list4 = TestContext.Parameters.Get("tag_list4");
-        private readonly string _tag_list5 = TestContext.Parameters.Get("tag_list5");
-        private readonly string _tag_list6 = TestContext.Parameters.Get("tag_list6");
-        private readonly string _tag_list7 = TestContext.Parameters.Get("tag_list7");
-        private readonly string _tag_list8 = TestContext.Parameters.Get("tag_list8");
+
         public MainPage(IWebDriver driver)
         {
             // constructor
             this._driver = driver;
         }
 
+       
         public MainPage CloseCoockie()
             //close coockie pop-up
         {
@@ -33,14 +28,28 @@ namespace Inloop.Pages
             _driver.FindElement(By.XPath("//a[@class='cc-btn cc-dismiss']")).Click();
             return this;
         }
-        public MainPage NewsLetterPick()
+
+        public MainPage NewsLetterPickChrome(bool chrome)
             // Scroll down and check newsletter click
         {
+
+          
+          
+
+
             List<IWebElement> news = _driver.FindElements(By.CssSelector("#newsletters-archive article a")).ToList();
-            var element = _driver.FindElement(By.CssSelector("#newsletters-archive article a"));
-            Actions actions = new Actions(_driver);
-            actions.MoveToElement(element);
-            actions.Perform();
+            _driver.FindElement(By.TagName("body")).SendKeys(Keys.End);
+            Thread.Sleep(3000);
+
+            if (chrome)
+            {
+                var element = _driver.FindElement(By.CssSelector("#newsletters-archive article a"));
+                Actions actions = new Actions(_driver);
+                actions.MoveToElement(element);
+                actions.Perform();
+                Thread.Sleep(2000);
+            }
+
             for (int i = 0; i < news.Count; i++)
             {
                 news[i].Click();
@@ -56,106 +65,54 @@ namespace Inloop.Pages
             Thread.Sleep(5000);
             return this;
         }
-        public MainPage TapInTab1()
+        public MainPage NewsLetterPickFirefox()
+        // Scroll down and check newsletter click
+        {
+
+            List<IWebElement> news = _driver.FindElements(By.CssSelector("#newsletters-archive article a")).ToList();
+            //_driver.FindElement(By.TagName("body")).SendKeys(Keys.End);
+            //var element = _driver.FindElement(By.CssSelector("#newsletters-archive article a"));
+            //Actions actions = new Actions(_driver);
+            //actions.MoveToElement(element);
+            //actions.Perform();
+            Thread.Sleep(2000);
+            for (int i = 0; i < news.Count; i++)
+            {
+                news[i].Click();
+                Thread.Sleep(2000);
+                Assert.IsTrue(_driver.PageSource.Contains("api/feedlandingapi/getnewslettertemplatebody?id="));
+                _driver.SwitchTo().Window(_driver.WindowHandles[1]);
+                _driver.Close();
+                _driver.SwitchTo().Window(_driver.WindowHandles[0]);
+                Thread.Sleep(2000);
+            }
+            _driver.SwitchTo().Window(_driver.WindowHandles[0]);
+            _driver.Navigate().GoToUrl(_base_url);
+            Thread.Sleep(5000);
+            return this;
+        }
+        public MainPage TapInTab1(string taglist)
             //Validation opening tematic tab "NATA"
         {
-            _driver.SwitchTo().Window(_driver.WindowHandles[0]);
-            _driver.FindElement(By.XPath(_tag_list1)).Click();
+            _driver.FindElement(By.XPath(taglist)).Click();
             Assert.IsTrue(_driver.PageSource.Contains("entity/7/"));
             _driver.Navigate().Back();
             Thread.Sleep(5000);
+            _driver.SwitchTo().Window(_driver.WindowHandles[0]);
             _driver.FindElement(By.TagName("body")).SendKeys(Keys.Home);
             return this;
         }
-        public MainPage TapInTab2()
-        //Validation opening tematic tab "Injuries"
-        {
-            _driver.SwitchTo().Window(_driver.WindowHandles[0]);
-            Thread.Sleep(5000);
-            _driver.FindElement(By.XPath(_tag_list2)).Click();
-            Assert.IsTrue(_driver.PageSource.Contains("entity/17/"));
-            _driver.Navigate().Back();
-            Thread.Sleep(5000);
-            _driver.FindElement(By.TagName("body")).SendKeys(Keys.Home);
-            return this;
-        } 
-        public MainPage TapInTab3()
-        //Validation opening tematic tab "Head atletic trainers"
-        {
-            _driver.SwitchTo().Window(_driver.WindowHandles[0]);
-            _driver.FindElement(By.XPath(_tag_list3)).Click();
-            Assert.IsTrue(_driver.PageSource.Contains("entity/3/"));
-            _driver.Navigate().Back();
-            Thread.Sleep(5000);
-            _driver.FindElement(By.TagName("body")).SendKeys(Keys.Home);
-            return this;
-        }
-        public MainPage TapInTab4()
-        //Validation opening tematic tab "Concussions"
-        {
-            _driver.SwitchTo().Window(_driver.WindowHandles[0]);
-            _driver.FindElement(By.XPath(_tag_list4)).Click();
-            Assert.IsTrue(_driver.PageSource.Contains("entity/152/"));
-            _driver.Navigate().Back();
-            Thread.Sleep(5000);
-            _driver.FindElement(By.TagName("body")).SendKeys(Keys.Home);
-            return this;
-        }
-        public MainPage TapInTab5()
-        //Validation opening tematic tab "Pain Relief"
-        {
-            _driver.SwitchTo().Window(_driver.WindowHandles[0]);
-            _driver.FindElement(By.XPath(_tag_list5)).Click();
-            Assert.IsTrue(_driver.PageSource.Contains("entity/368/5"));
-            _driver.Navigate().Back();
-            Thread.Sleep(5000);
-            _driver.FindElement(By.TagName("body")).SendKeys(Keys.Home);
-            return this;
-        }
-        public MainPage TapInTab6()
-        //Validation opening tematic tab "range of motion"
-        {
-            _driver.SwitchTo().Window(_driver.WindowHandles[0]);
-            _driver.FindElement(By.XPath(_tag_list6)).Click();
-            Assert.IsTrue(_driver.PageSource.Contains("entity/16/5"));
-            _driver.Navigate().Back();
-            Thread.Sleep(5000);
-            _driver.FindElement(By.TagName("body")).SendKeys(Keys.Home);
-            return this;
-        }
-        public MainPage TapInTab7()
-        //Validation opening tematic tab "Rehabilitation"
-        {
-            _driver.SwitchTo().Window(_driver.WindowHandles[0]);
-            _driver.FindElement(By.XPath(_tag_list7)).Click();
-            Assert.IsTrue(_driver.PageSource.Contains("entity/52/5"));
-            _driver.Navigate().Back();
-            Thread.Sleep(5000);
-            _driver.FindElement(By.TagName("body")).SendKeys(Keys.Home);
-            return this;
-        }
-        public MainPage TapInTab8()
-        //Validation opening tematic tab "Strength training"
-        {
-            _driver.SwitchTo().Window(_driver.WindowHandles[0]);
-            _driver.FindElement(By.XPath(_tag_list8)).Click();
-            Assert.IsTrue(_driver.PageSource.Contains("entity/126/5"));
-            _driver.Navigate().Back();
-            Thread.Sleep(5000);
-            _driver.FindElement(By.TagName("body")).SendKeys(Keys.Home);
-            return this;
-        }
-
         public MainPage PopularTab()
             //Validation opening popular tab
         {
-            _driver.FindElement(By.TagName("body")).SendKeys(Keys.End);
-            Thread.Sleep(2000);
-            var element = _driver.FindElement(By.XPath("//span[contains(text(),'Industry Tweets')]"));
-            Actions action = new Actions(_driver);
-            action.MoveToElement(element);
-            action.Perform();
-            List<IWebElement> pop = _driver.FindElement(By.XPath("//div[@class='widget reviewwidget ng-scope']")).FindElements(By.TagName("article")).ToList();
+            //_driver.FindElement(By.TagName("body")).SendKeys(Keys.End);
+            //Thread.Sleep(2000);
+            //var element = _driver.FindElement(By.XPath("//span[contains(text(),'Industry Tweets')]"));
+            //Actions action = new Actions(_driver);
+            //action.MoveToElement(element);
+            //action.Perform();
+            //Thread.Sleep(2000);
+            List<IWebElement> pop = _driver.FindElement(By.XPath("//div[@class='widget reviewwidget ng-scope']")).FindElements(By.TagName("a")).ToList();
             for (int j = 0; j < pop.Count; j++)
             {
                 Actions actions = new Actions(_driver);

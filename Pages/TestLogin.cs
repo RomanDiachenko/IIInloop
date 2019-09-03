@@ -33,8 +33,9 @@ namespace InloopLogin.Pages
         public Login B_DropDownAcc_personalize()
             //Check drop bar and personalize tab
         {
-            _driver.FindElement(By.XPath("//button[@class='menu menu-desktop']")).Click();
-            _driver.FindElement(By.XPath("//a[contains(text(),'Personalize my news')]")).Click();
+            _driver.FindElement(By.XPath("//div[@class='menu-wrapper google-analize not-internal-users']")).Click();
+            Thread.Sleep(3000);
+            _driver.FindElement(By.XPath("/html/body/div[3]/div/div[1]/div[2]/div[2]/div[1]/div")).Click();
             Thread.Sleep(3000);
             Assert.IsTrue(_driver.PageSource.Contains("trackeruser/personalization"));
             return this;
