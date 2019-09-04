@@ -47,10 +47,10 @@ namespace Inloop
                 //{
                 //    _driver = new EdgeDriver();
                 //}
-                _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+                _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+                _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
                 _driver.Manage().Window.Maximize();
                 _driver.Navigate().GoToUrl(_base_url);
-                Thread.Sleep(10000);
             }
 
             //Press in first few newsletter, after pressing close opened tab
@@ -101,7 +101,8 @@ namespace Inloop
                 //_mainPage = _mainPage.CloseCoockie();
                 _mainPage = _mainPage.PopularTab();
                 //_mainPage = _mainPage.RecentNews();
-                ////_mainPage = _mainPage.Personalization_conteiner();
+                //////_mainPage = _mainPage.Recentnewss();
+                //_mainPage = _mainPage.Personalization_conteiner();
             }
 
             [OneTimeTearDown]
