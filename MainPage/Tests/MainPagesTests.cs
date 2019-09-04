@@ -2,7 +2,6 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using System.Threading;
 using Inloop.Pages;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Edge;
@@ -34,6 +33,16 @@ namespace Inloop
             private readonly string _tag_assert6 = TestContext.Parameters.Get("tag_assert6");
             private readonly string _tag_assert7 = TestContext.Parameters.Get("tag_assert7");
             private readonly string _tag_assert8 = TestContext.Parameters.Get("tag_assert8");
+            private readonly string _navigaton_but1 = TestContext.Parameters.Get("navigaton_but1");
+            private readonly string _navigaton_but2 = TestContext.Parameters.Get("navigaton_but2");
+            private readonly string _navigaton_but3 = TestContext.Parameters.Get("navigaton_but3");
+            private readonly string _navigaton_but4 = TestContext.Parameters.Get("navigaton_but4");
+            private readonly string _navigaton_but5 = TestContext.Parameters.Get("navigaton_but5");
+            private readonly string _navigaton_assert1 = TestContext.Parameters.Get("navigaton_assert1");
+            private readonly string _navigaton_assert2 = TestContext.Parameters.Get("navigaton_assert2");
+            private readonly string _navigaton_assert3 = TestContext.Parameters.Get("navigaton_assert3");
+            private readonly string _navigaton_assert4 = TestContext.Parameters.Get("navigaton_assert4");
+            private readonly string _navigaton_assert5 = TestContext.Parameters.Get("navigaton_assert5");
             public IWebDriver _driver;
             private MainPage _mainPage;
             public TestContext TestContext { get; set; }
@@ -92,7 +101,13 @@ namespace Inloop
             {
                 _mainPage = new MainPage(_driver);
 
-                _mainPage = _mainPage.PopularTab();
+                _mainPage = _mainPage.A_LoginUser();
+                _mainPage = _mainPage.TopNavigation(_navigaton_but1, _navigaton_assert1);
+                _mainPage = _mainPage.TopNavigation(_navigaton_but2, _navigaton_assert2);
+                _mainPage = _mainPage.TopNavigation(_navigaton_but3, _navigaton_assert3);
+                _mainPage = _mainPage.TopNavigation(_navigaton_but4, _navigaton_assert4);
+                _mainPage = _mainPage.TopNavigation(_navigaton_but5, _navigaton_assert5);
+                //_mainPage = _mainPage.PopularTab();
             }
 
             [OneTimeTearDown]

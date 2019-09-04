@@ -11,6 +11,8 @@ namespace Inloop.Pages
     {
         private readonly IWebDriver _driver;
         private readonly string _base_url = TestContext.Parameters.Get("BaseUrl");
+        private readonly string _real_login = TestContext.Parameters.Get("Real_email");
+        private readonly string _real_password = TestContext.Parameters.Get("Real_password");
 
         public MainPage(IWebDriver driver)
         {
@@ -33,6 +35,38 @@ namespace Inloop.Pages
         /// </summary>
         /// <param name="chrome"></param>
         /// <returns>Opened all available newsletter </returns>
+        public MainPage A_LoginUser()
+        {
+            _driver.Navigate().GoToUrl(_base_url);
+            _driver.FindElement(By.XPath("//a[contains(text(),'Login')]")).Click();
+            _driver.FindElement(By.XPath("//form[@name='signInForm']//input[@placeholder='Email Address']")).SendKeys(_real_login);
+            _driver.FindElement(By.XPath("//form[@name='signInForm']//input[@placeholder='Password']")).SendKeys(_real_password);
+            Actions actions = new Actions(_driver);
+            IWebElement elementLocator = _driver.FindElement(By.XPath("//button[@class='submit google-analize ng-binding']"));
+            actions.DoubleClick(elementLocator).Perform();
+            _driver.FindElement(By.XPath("//li[@class='itMenuItem feed-button isTrackerUser my']//a[contains(text(),'My Newsfeed')]")).Click();
+            _driver.SwitchTo().Window(_driver.WindowHandles[0]);
+            Thread.Sleep(5000);
+            return this;
+        }
+        public MainPage TopNavigation(string button, string naw_assert)
+        {
+
+            var newsfeed = _driver.FindElement(By.XPath(button));
+            var actions = new Actions(_driver);
+            actions.KeyDown(Keys.LeftControl).Click(newsfeed).Build().Perform();
+            Thread.Sleep(5000);
+            _driver.SwitchTo().Window(_driver.WindowHandles[1]);
+            Assert.IsTrue(_driver.PageSource.Contains(naw_assert));
+            _driver.Close();
+            _driver.SwitchTo().Window(_driver.WindowHandles[0]);
+            Thread.Sleep(2000);
+
+           
+
+            Thread.Sleep(10000);
+            return this;
+        }
         public MainPage NewsLetterPickChrome(bool chrome)
         {
             List<IWebElement> news = _driver.FindElements(By.CssSelector("#newsletters-archive article a")).ToList();
@@ -58,6 +92,7 @@ namespace Inloop.Pages
             _driver.Navigate().GoToUrl(_base_url);
             return this;
         }
+
 
         /// <summary>
         /// Validation opening tematic tab (upper page categorys)

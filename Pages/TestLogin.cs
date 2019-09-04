@@ -11,6 +11,8 @@ namespace InloopLogin.Pages
     {
         private readonly IWebDriver _driver;
         private readonly string _base_url = TestContext.Parameters.Get("BaseUrl");
+        private readonly string _real_login = TestContext.Parameters.Get("Real_email");
+        private readonly string _real_password = TestContext.Parameters.Get("Real_password");
         public Login(IWebDriver driver)
         {
             this._driver = driver;
@@ -24,8 +26,8 @@ namespace InloopLogin.Pages
         {
             _driver.Navigate().GoToUrl(_base_url);
             _driver.FindElement(By.XPath("//a[contains(text(),'Login')]")).Click();
-            _driver.FindElement(By.XPath("//form[@name='signInForm']//input[@placeholder='Email Address']")).SendKeys("romareverse9@gmail.com");
-            _driver.FindElement(By.XPath("//form[@name='signInForm']//input[@placeholder='Password']")).SendKeys("ezykatka322");
+            _driver.FindElement(By.XPath("//form[@name='signInForm']//input[@placeholder='Email Address']")).SendKeys(_real_login);
+            _driver.FindElement(By.XPath("//form[@name='signInForm']//input[@placeholder='Password']")).SendKeys(_real_password);
             Actions actions = new Actions(_driver);
             IWebElement elementLocator = _driver.FindElement(By.XPath("//button[@class='submit google-analize ng-binding']"));
             actions.DoubleClick(elementLocator).Perform();
@@ -40,6 +42,7 @@ namespace InloopLogin.Pages
         public Login B_DropDownAcc_personalize()
         {
             _driver.FindElement(By.XPath("//div[@class='menu-wrapper google-analize not-internal-users']")).Click();
+            Thread.Sleep(2000);
             _driver.FindElement(By.XPath("/html/body/div[3]/div/div[1]/div[2]/div[2]/div[1]/div")).Click();
             Assert.IsTrue(_driver.PageSource.Contains("trackeruser/personalization"));
             return this;

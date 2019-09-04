@@ -18,6 +18,18 @@
     <Parameter name="tag_assert6" value="entity/16/5" />
     <Parameter name="tag_assert7" value="entity/52/5" />
     <Parameter name="tag_assert8" value="entity/126/5" />
+    <Parameter name="Real_email" value="romareverse9@gmail.com" />
+    <Parameter name="Real_password" value="ezykatka322" />
+    <Parameter name="navigaton_but1" value="//li[@class='dropdown menu-color1 active']//a[@class='ng-scope'][contains(text(),'My newsfeed')]" />
+    <Parameter name="navigaton_but2" value="//li[@class='dropdown menu-color1']//a[contains(text(),'Recent')]" />
+    <Parameter name="navigaton_but3" value="//li[@class='dropdown menu-color1 ng-scope']//a[contains(text(),'Industry Guide')]" />
+    <Parameter name="navigaton_but4" value="//li[@class='dropdown menu-color1']//a[contains(text(),'Discussions')]" />
+    <Parameter name="navigaton_but5" value="//li[@class='dropdown menu-color1']//a[contains(text(),'Job Board')]" />
+    <Parameter name="navigaton_assert1" value="/my" />
+    <Parameter name="navigaton_assert2" value="/news" />
+    <Parameter name="navigaton_assert3" value="/buyersguide" />
+    <Parameter name="navigaton_assert4" value="/forum#/" />
+    <Parameter name="navigaton_assert5" value="/forum#/categories/open-positions" />
   </TestRunParameters>
 </RunSettings>
 
