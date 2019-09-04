@@ -9,7 +9,6 @@ namespace Inloop.Pages
 {
     class MainPage
     {
-        //Import keys from .runsettings file
         private readonly IWebDriver _driver;
         private readonly string _base_url = TestContext.Parameters.Get("BaseUrl");
 
@@ -19,21 +18,25 @@ namespace Inloop.Pages
             this._driver = driver;
         }
 
-
+        /// <summary>
+        /// Closing coockie pop-up
+        /// </summary>
+        /// <returns>Closed coockie pop-up</returns>
         public MainPage CloseCoockie()
-        //close coockie pop-up
         {
-            //Thread.Sleep(5000);
             _driver.FindElement(By.XPath("//a[@class='cc-btn cc-dismiss']")).Click();
             return this;
         }
 
+        /// <summary>
+        /// Scroll in the end page and check newsletter click
+        /// </summary>
+        /// <param name="chrome"></param>
+        /// <returns>Opened all available newsletter </returns>
         public MainPage NewsLetterPickChrome(bool chrome)
-        // Scroll down and check newsletter click
         {
             List<IWebElement> news = _driver.FindElements(By.CssSelector("#newsletters-archive article a")).ToList();
             _driver.FindElement(By.TagName("body")).SendKeys(Keys.End);
-            //Thread.Sleep(3000);
 
             if (chrome)
             {
@@ -55,18 +58,28 @@ namespace Inloop.Pages
             _driver.Navigate().GoToUrl(_base_url);
             return this;
         }
-        public MainPage TapInTab1(string taglist)
-        //Validation opening tematic tab "NATA"
+
+        /// <summary>
+        /// Validation opening tematic tab (upper page categorys)
+        /// </summary>
+        /// <param name="taglist"></param>
+        /// <param name="tag_assert"></param>
+        /// <returns>Opened tenatic tabs</returns>
+        public MainPage TapInTab1(string taglist, string tag_assert)
         {
             _driver.FindElement(By.XPath(taglist)).Click();
-            //Assert.IsTrue(_driver.PageSource.Contains("entity/7/"));
+            Assert.IsTrue(_driver.PageSource.Contains(tag_assert));
             _driver.Navigate().Back();
             _driver.SwitchTo().Window(_driver.WindowHandles[0]);
             _driver.FindElement(By.TagName("body")).SendKeys(Keys.Home);
             return this;
         }
+
+        /// <summary>
+        /// Validation opening popular tab
+        /// </summary>
+        /// <returns>Opened popular tab</returns>
         public MainPage PopularTab()
-        //Validation opening popular tab
         {
             List<IWebElement> pop = _driver.FindElement(By.XPath("//div[@class='widget reviewwidget ng-scope']")).FindElements(By.TagName("a")).ToList();
             for (int j = 0; j < pop.Count; j++)
@@ -77,49 +90,35 @@ namespace Inloop.Pages
             _driver.SwitchTo().Window(_driver.WindowHandles[0]);
             return this;
         }
-        //public MainPage RecentNews()
-        //checking recentNews NOT WORKED
-        //{
-        //var element = _driver.FindElement(By.XPath("//section[1]//article[1]"));
-        //Actions actions = new Actions(_driver);
-        //actions.MoveToElement(element);
-        //actions.Perform();
-        //List<IWebElement> rec = _driver.FindElement(By.XPath("/html[1]/body[1]/div[2]/div[1]/main[1]/template-page[1]/div[3]/div[2]/div[2]/div[1]/article-plates[3]/div[1]/div[1]")).FindElements(By.TagName("a")).ToList();
-        //for (int i = 0; i < rec.Count; i++)
-        //{
-        //    rec[i].Click();
-        //    Thread.Sleep(3000);
-        //    //Assert.IsFalse(_driver.PageSource.Contains(_base_url));
-        //    _driver.Navigate().Back();
-        //    _driver.SwitchTo().Window(_driver.WindowHandles[0]);
-        //    Thread.Sleep(5000);
-        //}
-        //return this;
-        //}
-        public MainPage Recentnewss()
-        {
-            _driver.FindElement(By.XPath("//section[1]//article[1]//div[1]//a[1]//img[1]")).Click();
-            //Thread.Sleep(5000);
-            return this;
 
-
-        }
-
-            public MainPage Personalization_conteiner()
-        //Tap in personalization tabs
+        /// <summary>
+        /// Tap in personalization tabs
+        /// </summary>
+        /// <returns>Opened personalization tabs</returns>
+        public MainPage Personalization_conteiner()
         {
             List<IWebElement> pers = _driver.FindElement(By.XPath("//div[@class='personalization-container']")).FindElements(By.TagName("p")).ToList();
             for (int i = 0; i < pers.Count; i++)
             {
                 _driver.SwitchTo().Window(_driver.WindowHandles[0]);
                 pers[i].Click();
-                //Thread.Sleep(6000);
-                //_driver.Navigate().Back();
-                //Thread.Sleep(2000);
             }
             return this;
         }
+       
+        
+        //Demo form crashing captcha
+        //[Test]
+        //public void ReCaptcha()
+        //{
+        //    _driver.FindElement(By.XPath("//input[@placeholder='Your Email']")).SendKeys("aa@aa.aa");
+        //    IWebElement frame = _driver.FindElements(By.XPath("//iframe[contains(@src, 'recaptcha')]"))[0];
+        //    _driver.SwitchTo().Frame(frame);
+        //    IWebElement checkbox = _driver.FindElement(By.CssSelector("div.recaptcha-checkbox-border"));
+        //    checkbox.Click();
+        //    Thread.Sleep(5000);
+        //}
 
-    
+
     }
 }

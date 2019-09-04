@@ -26,6 +26,14 @@ namespace Inloop
             private readonly string _tag_list6 = TestContext.Parameters.Get("tag_list6");
             private readonly string _tag_list7 = TestContext.Parameters.Get("tag_list7");
             private readonly string _tag_list8 = TestContext.Parameters.Get("tag_list8");
+            private readonly string _tag_assert1 = TestContext.Parameters.Get("tag_assert1");
+            private readonly string _tag_assert2 = TestContext.Parameters.Get("tag_assert2");
+            private readonly string _tag_assert3 = TestContext.Parameters.Get("tag_assert3");
+            private readonly string _tag_assert4 = TestContext.Parameters.Get("tag_assert4");
+            private readonly string _tag_assert5 = TestContext.Parameters.Get("tag_assert5");
+            private readonly string _tag_assert6 = TestContext.Parameters.Get("tag_assert6");
+            private readonly string _tag_assert7 = TestContext.Parameters.Get("tag_assert7");
+            private readonly string _tag_assert8 = TestContext.Parameters.Get("tag_assert8");
             public IWebDriver _driver;
             private MainPage _mainPage;
             public TestContext TestContext { get; set; }
@@ -43,75 +51,54 @@ namespace Inloop
                 {
                     _driver = new FirefoxDriver();
                 }
-                //else if (typeof(TWebDriver).Name == "EdgeDriver")
-                //{
-                //    _driver = new EdgeDriver();
-                //}
+                else if (typeof(TWebDriver).Name == "EdgeDriver")
+                {
+                    _driver = new EdgeDriver();
+                }
                 _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
                 _driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
                 _driver.Manage().Window.Maximize();
                 _driver.Navigate().GoToUrl(_base_url);
             }
 
-            //Press in first few newsletter, after pressing close opened tab
 
             [Test]
             public void A_NewsletterPicker()
             {
                 bool chrome = (typeof(TWebDriver).Name == "ChromeDriver");
                 _mainPage = new MainPage(_driver);
+
                 _mainPage = _mainPage.CloseCoockie();
                 _mainPage = _mainPage.NewsLetterPickChrome(chrome);
-                
             }
-
-            //Demo form crashing captcha
-            //[Test]
-            //public void ReCaptcha()
-            //{
-            //    _driver.FindElement(By.XPath("//input[@placeholder='Your Email']")).SendKeys("aa@aa.aa");
-            //    IWebElement frame = _driver.FindElements(By.XPath("//iframe[contains(@src, 'recaptcha')]"))[0];
-            //    _driver.SwitchTo().Frame(frame);
-            //    IWebElement checkbox = _driver.FindElement(By.CssSelector("div.recaptcha-checkbox-border"));
-            //    checkbox.Click();
-            //    Thread.Sleep(5000);
-            //}
 
 
             [Test]
-            // Tap in tematic tabs
             public void B_TapIn1Tab()
             {
                 _mainPage = new MainPage(_driver);
 
-                _mainPage = _mainPage.TapInTab1(_tag_list1);
-                _mainPage = _mainPage.TapInTab1(_tag_list2);
-                _mainPage = _mainPage.TapInTab1(_tag_list3);
-                _mainPage = _mainPage.TapInTab1(_tag_list4);
-                _mainPage = _mainPage.TapInTab1(_tag_list5);
-                _mainPage = _mainPage.TapInTab1(_tag_list6);
-                _mainPage = _mainPage.TapInTab1(_tag_list7);
-                _mainPage = _mainPage.TapInTab1(_tag_list8);
+                _mainPage = _mainPage.TapInTab1(_tag_list1, _tag_assert1);
+                _mainPage = _mainPage.TapInTab1(_tag_list2, _tag_assert2);
+                _mainPage = _mainPage.TapInTab1(_tag_list3, _tag_assert3);
+                _mainPage = _mainPage.TapInTab1(_tag_list4, _tag_assert4);
+                _mainPage = _mainPage.TapInTab1(_tag_list5, _tag_assert5);
+                _mainPage = _mainPage.TapInTab1(_tag_list6, _tag_assert6);
+                _mainPage = _mainPage.TapInTab1(_tag_list7, _tag_assert7);
+                _mainPage = _mainPage.TapInTab1(_tag_list8, _tag_assert8);
             }
             [Test]
             public void C_PopularTab1()
             {
                 _mainPage = new MainPage(_driver);
 
-                //_mainPage = _mainPage.CloseCoockie();
                 _mainPage = _mainPage.PopularTab();
-                //_mainPage = _mainPage.RecentNews();
-                //////_mainPage = _mainPage.Recentnewss();
-                //_mainPage = _mainPage.Personalization_conteiner();
             }
 
             [OneTimeTearDown]
             public void TearDown()
             {
                 _driver.SwitchTo().Window(_driver.WindowHandles[0]);
-                Assert.IsTrue(_driver.PageSource.Contains(_base_url));
-                Thread.Sleep(10000);
-
 
                 _driver.Quit();
             }

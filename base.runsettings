@@ -10,6 +10,14 @@
     <Parameter name="tag_list6" value="//a[contains(text(),'Range Of Motion')]" />
     <Parameter name="tag_list7" value="//a[contains(text(),'Rehabilitation')]" />
     <Parameter name="tag_list8" value="//a[contains(text(),'Strength Training')]" />
+    <Parameter name="tag_assert1" value="entity/7/5" />
+    <Parameter name="tag_assert2" value="entity/17/5" />
+    <Parameter name="tag_assert3" value="entity/3/5" />
+    <Parameter name="tag_assert4" value="entity/152/5" />
+    <Parameter name="tag_assert5" value="entity/368/5" />
+    <Parameter name="tag_assert6" value="entity/16/5" />
+    <Parameter name="tag_assert7" value="entity/52/5" />
+    <Parameter name="tag_assert8" value="entity/126/5" />
   </TestRunParameters>
 </RunSettings>
 

@@ -16,8 +16,11 @@ namespace InloopLogin.Pages
             this._driver = driver;
         }
 
+        /// <summary>
+        /// Validation of correct login user
+        /// </summary>
+        /// <returns>Login valid</returns>
         public Login A_LoginUser()
-            //Validation of correct login user
         {
             _driver.Navigate().GoToUrl(_base_url);
             _driver.FindElement(By.XPath("//a[contains(text(),'Login')]")).Click();
@@ -29,16 +32,24 @@ namespace InloopLogin.Pages
             Assert.IsTrue(_driver.PageSource.Contains(_base_url));
             return this;
         }
+
+        /// <summary>
+        /// Check drop bar and personalize tab
+        /// </summary>
+        /// <returns>Drop bar and personalization tab works</returns>
         public Login B_DropDownAcc_personalize()
-            //Check drop bar and personalize tab
         {
             _driver.FindElement(By.XPath("//div[@class='menu-wrapper google-analize not-internal-users']")).Click();
             _driver.FindElement(By.XPath("/html/body/div[3]/div/div[1]/div[2]/div[2]/div[1]/div")).Click();
             Assert.IsTrue(_driver.PageSource.Contains("trackeruser/personalization"));
             return this;
         }
+
+        /// <summary>
+        /// Check tematic tabs
+        /// </summary>
+        /// <returns>Tematic tabs are worked</returns>
         public Login C_Foloving()
-            //Check tematic tabs
         {
             _driver.FindElement(By.XPath("//li[contains(text(),'Following')]")).Click();
             _driver.FindElement(By.XPath("//a[contains(text(),'My news')]")).Click();
@@ -46,8 +57,12 @@ namespace InloopLogin.Pages
             _driver.Navigate().Back();
             return this;
         }
+
+        /// <summary>
+        /// Check sorting tab
+        /// </summary>
+        /// <returns>Sorting tab are worked</returns>
         public Login D_Sorting()
-            //Check sorting tab
         {
             _driver.FindElement(By.XPath("//li[contains(text(),'categories')]")).Click();
             _driver.FindElement(By.XPath("//li[contains(text(),'publishers')]")).Click();
@@ -56,8 +71,12 @@ namespace InloopLogin.Pages
             _driver.FindElement(By.XPath("//label[contains(text(),'list view')]")).Click();
             return this;
         }
+
+        /// <summary>
+        /// Check "My profile" tab in drop bar
+        /// </summary>
+        /// <returns>"My profile" opened in walid page</returns>
         public Login E_DropBar()
-            //Autorized drop bar
         {
             _driver.FindElement(By.XPath("//button[@class='menu menu-desktop']")).Click();
             _driver.FindElement(By.XPath("//a[contains(text(),'My Profile')]")).Click();
@@ -65,8 +84,12 @@ namespace InloopLogin.Pages
             Assert.IsTrue(_driver.PageSource.Contains("trackeruser/profiledetails"));
             return this;
         }
+
+        /// <summary>
+        /// Check newsletter
+        /// </summary>
+        /// <returns>Newsletters are worked</returns>
         public Login My_newsfeed()
-        //newsfeed check
         {
             List<IWebElement> top = _driver.FindElement(By.XPath("//div[@class='navbar-collapse collapse']")).FindElements(By.TagName("a")).ToList();
             for (int i = 0; i < top.Count; i++)
@@ -82,21 +105,16 @@ namespace InloopLogin.Pages
 
             return this;
         }
+
+        /// <summary>
+        /// Go to main page
+        /// </summary>
+        /// <returns>Opened main page</returns>
         public Login Mainpage()
-        //go to main page
         {
             _driver.Navigate().GoToUrl(_base_url);
             Assert.IsTrue(_driver.PageSource.Contains(_base_url));
             return this;
-        }
-                
-        [OneTimeTearDown]
-        public void TearDown()
-        {
-            _driver.SwitchTo().Window(_driver.WindowHandles[0]);
-
-
-            _driver.Quit();
         }
     }
 }
