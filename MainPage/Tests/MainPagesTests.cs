@@ -115,8 +115,6 @@ namespace Inloop
             {
                 _mainPage = new MainPage(_driver);
 
-                bool chrome = (typeof(TWebDriver).Name == "ChromeDriver");
-                bool firefox = (typeof(TWebDriver).Name == "FirefoxDriver");
                 //_mainPage = _mainPage.CloseCoockie();
                 _mainPage = _mainPage.Tags();
 
