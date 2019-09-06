@@ -29,8 +29,10 @@ C:\Users\r_diachenko\source\repos\rrrttt\bin\Debug\System.Security.AccessControl
 C:\Users\r_diachenko\source\repos\rrrttt\bin\Debug\System.Security.Permissions.xml
 C:\Users\r_diachenko\source\repos\rrrttt\bin\Debug\System.Security.Principal.Windows.xml
 C:\Users\r_diachenko\source\repos\rrrttt\bin\Debug\WebDriver.xml
+C:\Users\r_diachenko\source\repos\rrrttt\obj\Debug\Inloop.csprojAssemblyReference.cache
 C:\Users\r_diachenko\source\repos\rrrttt\obj\Debug\Inloop.csproj.CoreCompileInputs.cache
 C:\Users\r_diachenko\source\repos\rrrttt\obj\Debug\Inloop.csproj.CopyComplete
 C:\Users\r_diachenko\source\repos\rrrttt\obj\Debug\rrrttt.dll
 C:\Users\r_diachenko\source\repos\rrrttt\obj\Debug\rrrttt.pdb
-C:\Users\r_diachenko\source\repos\rrrttt\obj\Debug\Inloop.csprojAssemblyReference.cache
+C:\Users\r_diachenko\source\repos\rrrttt\bin\Debug\Telerik.JustMock.dll
+C:\Users\r_diachenko\source\repos\rrrttt\bin\Debug\Telerik.JustMock.xml

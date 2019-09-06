@@ -89,6 +89,9 @@
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml" />
+    <Reference Include="Telerik.JustMock, Version=2019.2.620.1, Culture=neutral, PublicKeyToken=721b6c5bc0326b3a, processorArchitecture=MSIL">
+      <HintPath>..\..\..\Desktop\packages\JustMock.2019.2.620.1\lib\net45\Telerik.JustMock.dll</HintPath>
+    </Reference>
     <Reference Include="WebDriver, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\TestProject1\packages\Selenium.WebDriver.4.0.0-alpha02\lib\net47\WebDriver.dll</HintPath>
     </Reference>

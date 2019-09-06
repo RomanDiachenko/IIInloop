@@ -61,10 +61,6 @@ namespace Inloop.Pages
             _driver.Close();
             _driver.SwitchTo().Window(_driver.WindowHandles[0]);
             Thread.Sleep(2000);
-
-           
-
-            Thread.Sleep(10000);
             return this;
         }
         public MainPage NewsLetterPickChrome(bool chrome)
@@ -107,6 +103,7 @@ namespace Inloop.Pages
             _driver.Navigate().Back();
             _driver.SwitchTo().Window(_driver.WindowHandles[0]);
             _driver.FindElement(By.TagName("body")).SendKeys(Keys.Home);
+            Thread.Sleep(3000);
             return this;
         }
 
@@ -140,8 +137,8 @@ namespace Inloop.Pages
             }
             return this;
         }
-       
-        
+
+
         //Demo form crashing captcha
         //[Test]
         //public void ReCaptcha()
@@ -154,6 +151,35 @@ namespace Inloop.Pages
         //    Thread.Sleep(5000);
         //}
 
+        public MainPage Tags()
+        {
+            _driver.Navigate().GoToUrl(_base_url);
+            _driver.FindElement(By.TagName("body")).SendKeys(Keys.End);
+            Thread.Sleep(2000);
+            _driver.SwitchTo().Window(_driver.WindowHandles[0]);
+            List<IWebElement> tag = _driver.FindElement(By.XPath("//div[@class='widget ng-scope']")).FindElements(By.TagName("li")).ToList();
+            for (int i = 0; i < tag.Count; i++)
+            {
+                Thread.Sleep(1000);
+                Actions actions = new Actions(_driver);
+                actions.KeyDown(Keys.LeftControl).Click(tag[i]).Build().Perform();
+                Thread.Sleep(1000);
+                _driver.SwitchTo().Window(_driver.WindowHandles[1]);
+                Assert.IsTrue(_driver.PageSource.Contains("/en/entity"));
+                _driver.Close();
+                _driver.SwitchTo().Window(_driver.WindowHandles[0]);
+                Thread.Sleep(2000);
+            }
 
+            return this;
+        }
+         public MainPage LogOut()
+        {
+            _driver.FindElement(By.XPath("//a[@class='dropdown-toggle ng-binding']")).Click();
+            Thread.Sleep(2000);
+            _driver.FindElement(By.XPath("//span[contains(text(),'Logout')]")).Click();
+
+            return this;
+        }
     }
 }
